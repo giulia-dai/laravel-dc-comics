@@ -25,7 +25,7 @@
                     <td>{{ $comic->title }}</td>
                     <td>{{ $comic->series }}</td>
                     <td>{{ $comic->type }}</td>
-                    <td>{{ $comic->price }}</td>
+                    <td>${{ $comic->price }}</td>
 
                     <td>
                         <a href="{{ route('comics.show', ['comic' => $comic->id]) }}" class="btn btn-primary">See More</a>
@@ -36,8 +36,6 @@
                             @method('DELETE')
 
                             <button type="submit" class="btn btn-danger mt-2"> Delete</button>
-
-
                         </form>
 
                     </td>
@@ -45,6 +43,4 @@
             @endforeach
         </tbody>
     </table>
-
-
 @endsection

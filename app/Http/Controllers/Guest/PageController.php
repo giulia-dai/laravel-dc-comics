@@ -9,6 +9,6 @@ class PageController extends Controller
 {
     public function index()
     {
-        return redirect()->route('comics.index');
+        return view('welcome');
     }
 }
