@@ -26,7 +26,7 @@ class ComicController extends Controller
      */
     public function create()
     {
-        //
+        return view('comics.create');
     }
 
     /**
@@ -38,15 +38,18 @@ class ComicController extends Controller
     public function store(Request $request)
     {
         $form_data = $request->all();
+        //dd($form_data);
 
         $newComic = new Comic();
-        $newComic->thumb = $form_data['thumb'];
-        $newComic->title = $form_data['title'];
-        $newComic->description = $form_data['description'];
-        $newComic->price = $form_data['price'];
-        $newComic->series = $form_data['series'];
-        $newComic->sale_date = $form_data['sale_date'];
-        $newComic->type = $form_data['type'];
+
+        $newComic->fill($form_data); //questo metodo compila al posto nostro i valori dentro al form ma laravel per proteggersi da un utente malintenzionato è necessario definire quali sono gli elementi fillable
+
+        // $newComic->thumb = $form_data['thumb'];
+        // $newComic->title = $form_data['title'];
+        // $newComic->type = $form_data['type'];
+        // $newComic->series = $form_data['series'];
+        // $newComic->price = $form_data['price'];
+        // $newComic->description = $form_data['description'];
         $newComic->save();
 
         return redirect()->route('comics.show', ['comic' => $newComic->id]);
@@ -58,9 +61,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Comic $comic)
     {
-        $comic = Comic::findOrFail($id);
+        //$comic = Comic::findOrFail($id);
         return view('comics.show', compact('comic'));
     }
 
@@ -72,7 +75,9 @@ class ComicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comic = Comic::findOrFail($id);
+
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -84,7 +89,12 @@ class ComicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comic = Comic::findOrFail($id);
+        $form_data = $request->all();
+
+        $comic->update($form_data); //update fa sia la fill che il salvataggio
+
+        return redirect()->route('comics.show', ['comic' => $comic->id]);
     }
 
     /**
@@ -95,6 +105,8 @@ class ComicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comic = Comic::findOrFail($id);
+        $comic->delete();
+        return redirect()->route('comics.index');
     }
 }
