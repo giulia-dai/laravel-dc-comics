@@ -78,7 +78,7 @@ Edit comic book
         <div class="mb-3">
             <label for="description" class="form-label">Description:</label>
             <textarea type="text" class="form-control @error('description') is-invalid @enderror" id="description"
-                name="description" required> {{ old('description', $pasta->description) }} </textarea>
+                name="description" required> {{ old('description', $comic->description) }} </textarea>
             @error('description')
                 <div class="invalid-feedback">
                     {{ $message }}
