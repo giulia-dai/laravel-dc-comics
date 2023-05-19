@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('page-title', 'Edit Comic')
-Edit comic book
-
 
 @section('content')
     <form method="POST" action="{{ route('comics.update', ['comic' => $comic->id]) }}">
